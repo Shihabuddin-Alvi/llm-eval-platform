@@ -4,3 +4,5 @@ pydantic
 python-dotenv
 streamlit
 requests
+pytest
+httpx
