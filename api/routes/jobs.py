@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException
 from typing import List
 from core.models import EvalJob
 from core.runner import run_eval, get_db_connection
+from core.clustering import cluster_failures as do_cluster
 
 router = APIRouter(prefix="/jobs", tags=["jobs"])
 
@@ -34,6 +35,9 @@ def get_leaderboard():
 @router.post("/batch")
 def submit_batch(jobs: List[EvalJob]):
     return [run_eval(job) for job in jobs]
+@router.post("/failures/cluster")
+def cluster_failures(texts: List[str], n_clusters: int = 3):
+    return do_cluster(texts, n_clusters)
 
 @router.get("/{job_id}")
 def get_job(job_id: int):
@@ -42,4 +46,3 @@ def get_job(job_id: int):
     conn.close()
     if row is None:
         raise HTTPException(status_code=404, detail="Job not found")
-    return dict(row)
