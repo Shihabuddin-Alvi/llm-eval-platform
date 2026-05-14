@@ -8,3 +8,4 @@ pytest
 httpx
 sentence-transformers
 scikit-learn
+mcp
