@@ -27,7 +27,7 @@ def get_leaderboard():
         FROM jobs
         WHERE model_name IS NOT NULL AND model_name != ''
         GROUP BY model_name
-        ORDER BY avg_score DESC
+        ORDER BY total_runs DESC, avg_score DESC
     """).fetchall()
     conn.close()
     return [dict(row) for row in rows]
