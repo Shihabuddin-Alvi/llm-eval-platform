@@ -38,6 +38,19 @@ def submit_batch(jobs: List[EvalJob]):
 @router.post("/failures/cluster")
 def cluster_failures(texts: List[str], n_clusters: int = 3):
     return do_cluster(texts, n_clusters)
+@router.delete("/cleanup")
+def cleanup_test_data():
+    noise = [
+        'concurrency-test', 'batch-100', 'perf-test', 'batch-mixed',
+        'mixed-test', 'tie-breaker-test', 'integrity-model', 'edge-test',
+        'math-verify-model', 'suite-v3'
+    ]
+    conn = get_db_connection()
+    for name in noise:
+        conn.execute("DELETE FROM jobs WHERE model_name = ?", (name,))
+    conn.commit()
+    conn.close()
+    return {"deleted": noise}
 
 @router.get("/{job_id}")
 def get_job(job_id: int):
