@@ -30,7 +30,10 @@ def contains_match(prediction: str, reference: str) -> dict:
 
 
 def regex_match(prediction: str, pattern: str) -> dict:
-    passed = bool(re.search(pattern, prediction, re.IGNORECASE))
+    try:
+        passed = bool(re.search(pattern, prediction, re.IGNORECASE))
+    except re.error:
+        passed = False
     return {
         "grader": "regex_match",
         "passed": passed,
