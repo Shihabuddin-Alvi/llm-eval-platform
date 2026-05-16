@@ -163,7 +163,7 @@ if page == "Submit Evaluation":
                 "prediction": prediction,
                 "reference": reference,
                 "grader_name": grader,
-                "model_name": model_name or None
+                "model_name": model_name or "unknown"
             }
             res = httpx.post(f"{API_URL}/jobs", json=payload)
             data = res.json()
