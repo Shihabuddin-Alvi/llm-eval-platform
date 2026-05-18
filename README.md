@@ -1,4 +1,4 @@
-# Criterion — LLM Eval Platform
+# Criterion — LLM Evaluation Platform
 
 A REST API and MCP server for evaluating LLM outputs. Agents call the API programmatically to run evals, compare models, and diagnose failures. The Streamlit UI is a thin wrapper that calls the same API.
 
