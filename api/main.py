@@ -7,7 +7,7 @@ from fastapi import FastAPI, Depends
 from api.routes import graders
 from api.routes import jobs
 from api.routes import history
-from core.runner import create_tables, get_db_connection
+from core.runner import create_tables, get_db_connection, add_status_column
 from core.auth import verify_token
 
 app = FastAPI(
@@ -29,6 +29,7 @@ def seed_api_key():
 @app.on_event("startup")
 def startup():
     create_tables()
+    add_status_column()
     seed_api_key()
 
 app.include_router(graders.router, dependencies=[Depends(verify_token)])

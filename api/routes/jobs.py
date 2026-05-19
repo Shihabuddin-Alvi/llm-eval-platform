@@ -1,7 +1,8 @@
 from fastapi import APIRouter, HTTPException
 from typing import List
 from core.models import EvalJob
-from core.runner import run_eval, get_db_connection
+from fastapi import BackgroundTasks
+from core.runner import run_eval, get_db_connection, create_async_job, update_job_with_result
 from core.clustering import cluster_failures as do_cluster
 
 router = APIRouter(prefix="/jobs", tags=["jobs"])
@@ -10,6 +11,24 @@ router = APIRouter(prefix="/jobs", tags=["jobs"])
 def submit_job(job: EvalJob):
     result = run_eval(job)
     return result
+@router.post("/eval/async")
+def submit_async_eval(job: EvalJob, background_tasks: BackgroundTasks):
+    job_id = create_async_job(job)
+    background_tasks.add_task(run_eval_background, job_id, job)
+    return {"job_id": job_id, "status": "pending"}
+
+def run_eval_background(job_id: int, job: EvalJob):
+    result = run_eval(job)
+    update_job_with_result(job_id, result)
+
+@router.get("/eval/{job_id}")
+def get_async_job(job_id: int):
+    conn = get_db_connection()
+    row = conn.execute("SELECT * FROM jobs WHERE id = ?", (job_id,)).fetchone()
+    conn.close()
+    if row is None:
+        raise HTTPException(status_code=404, detail="Job not found")
+    return dict(row)
 
 @router.get("")
 def list_jobs():

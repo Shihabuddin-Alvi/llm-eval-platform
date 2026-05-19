@@ -39,6 +39,38 @@ def create_tables():
     conn.commit()
     conn.close()
 
+def add_status_column():
+    conn = get_db_connection()
+    try:
+        conn.execute("ALTER TABLE jobs ADD COLUMN status TEXT DEFAULT 'done'")
+        conn.commit()
+    except sqlite3.OperationalError:
+        pass  # column already exists
+    conn.close()
+
+def create_async_job(job) -> int:
+    conn = get_db_connection()
+    cursor = conn.execute(
+        """INSERT INTO jobs (input, prediction, reference, grader_name, model_name, score, passed, reasoning, status)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+        (job.input, job.prediction, job.reference, job.grader_name,
+         job.model_name, None, None, None, "pending")
+    )
+    job_id = cursor.lastrowid
+    conn.commit()
+    conn.close()
+    return job_id
+
+def update_job_with_result(job_id: int, result: dict):
+    conn = get_db_connection()
+    conn.execute(
+        """UPDATE jobs SET score=?, passed=?, reasoning=?, status=?
+           WHERE id=?""",
+        (result["score"], int(result["passed"]), result.get("reasoning", ""), "done", job_id)
+    )
+    conn.commit()
+    conn.close()
+
 def save_job_result(job: EvalJob, result: dict):
     conn = sqlite3.connect(DB_PATH)
     conn.execute("""
