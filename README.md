@@ -12,7 +12,7 @@ A REST API and MCP server for evaluating LLM outputs. Agents call the API progra
 
 ## Stack
 - FastAPI: REST API layer
-- SQLite: persistence
+- PostgreSQL: persistence (Render Postgres)
 - Streamlit: UI layer
 - Gemini 2.0 Flash Lite: primary LLM judge
 - Groq (llama-3.1-8b-instant): fallback LLM judge
@@ -46,7 +46,7 @@ curl -H "Authorization: Bearer <your-token>" https://criterion-api-c7mf.onrender
 ## Graders
 - `exact_match`: strips, lowercases, compares prediction == reference
 - `contains_match`: checks if reference appears in prediction
-- `regex_match`: re.search with re.IGNORECASE
+- `regex_match`: re.search with re.DOTALL | re.IGNORECASE
 - `llm_judge`: Gemini → Groq → contains_match fallback chain
 
 ## MCP Tools
@@ -65,8 +65,8 @@ curl -H "Authorization: Bearer <your-token>" https://criterion-api-c7mf.onrender
 
 ```bash
 git clone https://github.com/Shihabuddin-Alvi/-llm-eval-platform.git
-cd llm-eval-platform
-python3.11 -m venv venv
+cd -llm-eval-platform
+python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
@@ -76,6 +76,7 @@ Create `.env`:
 GEMINI_API_KEY=your_key
 GROQ_API_KEY=your_key
 CRITERION_API_KEY=your_key
+DATABASE_URL=your_postgres_connection_string
 ```
 
 ```bash
@@ -90,7 +91,7 @@ python mcp/server.py             # Tab 3
 python3 criterion_tests_v3.py
 ```
 
-55 tests hitting the live Render URL. Current: 54/55 passing (98.2%).
+108 tests hitting the live Render URL. Current: 108/108 passing.
 
 ## Version
-v2.0 — bearer token auth, async eval, Groq fallback, CSV/JSONL upload, failure clusters UI, MCP get_clusters tool.
+v3.0 — Postgres persistence, re.DOTALL fix, 108/108 tests passing.
