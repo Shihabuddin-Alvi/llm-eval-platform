@@ -31,7 +31,7 @@ def contains_match(prediction: str, reference: str) -> dict:
 
 def regex_match(prediction: str, pattern: str) -> dict:
     try:
-        passed = bool(re.search(pattern, prediction, re.IGNORECASE))
+        passed = bool(re.search(pattern, prediction, re.DOTALL | re.IGNORECASE))
     except re.error:
         passed = False
     return {
