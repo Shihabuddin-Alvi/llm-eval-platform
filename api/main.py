@@ -7,7 +7,7 @@ from fastapi import FastAPI, Depends
 from api.routes import graders
 from api.routes import jobs
 from api.routes import history
-from core.runner import create_tables, get_db_connection, add_status_column
+from core.runner import create_tables, get_db_connection
 from core.auth import verify_token
 
 app = FastAPI(
@@ -22,14 +22,15 @@ def seed_api_key():
         token = secrets.token_hex(32)
         print(f"\n[CRITERION] No API key in .env. Generated key: {token}\n")
     conn = get_db_connection()
-    conn.execute("INSERT OR IGNORE INTO api_keys (token) VALUES (?)", (token,))
+    cur = conn.cursor()
+    cur.execute("INSERT INTO api_keys (token) VALUES (%s) ON CONFLICT (token) DO NOTHING", (token,))
     conn.commit()
+    cur.close()
     conn.close()
 
 @app.on_event("startup")
 def startup():
     create_tables()
-    add_status_column()
     seed_api_key()
 
 app.include_router(graders.router, dependencies=[Depends(verify_token)])

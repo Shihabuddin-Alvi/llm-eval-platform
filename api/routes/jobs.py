@@ -8,6 +8,7 @@ from fastapi import UploadFile, File
 import csv
 import json
 import io
+import psycopg2.extras
 
 router = APIRouter(prefix="/jobs", tags=["jobs"])
 
@@ -15,6 +16,7 @@ router = APIRouter(prefix="/jobs", tags=["jobs"])
 def submit_job(job: EvalJob):
     result = run_eval(job)
     return result
+
 @router.post("/eval/async")
 def submit_async_eval(job: EvalJob, background_tasks: BackgroundTasks):
     job_id = create_async_job(job)
@@ -28,7 +30,10 @@ def run_eval_background(job_id: int, job: EvalJob):
 @router.get("/eval/{job_id}")
 def get_async_job(job_id: int):
     conn = get_db_connection()
-    row = conn.execute("SELECT * FROM jobs WHERE id = ?", (job_id,)).fetchone()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    cur.execute("SELECT * FROM jobs WHERE id = %s", (job_id,))
+    row = cur.fetchone()
+    cur.close()
     conn.close()
     if row is None:
         raise HTTPException(status_code=404, detail="Job not found")
@@ -41,26 +46,31 @@ def list_jobs():
 @router.get("/leaderboard")
 def get_leaderboard():
     conn = get_db_connection()
-    rows = conn.execute("""
+    cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    cur.execute("""
         SELECT
             model_name,
             COUNT(*) as total_runs,
-            ROUND(AVG(score), 3) as avg_score,
-            ROUND(SUM(passed) * 100.0 / COUNT(*), 1) as pass_rate
+            ROUND(AVG(score)::numeric, 3) as avg_score,
+            ROUND((SUM(passed) * 100.0 / COUNT(*))::numeric, 1) as pass_rate
         FROM jobs
         WHERE model_name IS NOT NULL AND model_name != ''
         GROUP BY model_name
         ORDER BY total_runs DESC, avg_score DESC
-    """).fetchall()
+    """)
+    rows = cur.fetchall()
+    cur.close()
     conn.close()
     return [dict(row) for row in rows]
 
 @router.post("/batch")
 def submit_batch(jobs: List[EvalJob]):
     return [run_eval(job) for job in jobs]
+
 @router.post("/failures/cluster")
 def cluster_failures(texts: List[str], n_clusters: int = 3):
     return do_cluster(texts, n_clusters)
+
 @router.delete("/cleanup")
 def cleanup_test_data():
     noise = [
@@ -69,11 +79,14 @@ def cleanup_test_data():
         'math-verify-model', 'suite-v3'
     ]
     conn = get_db_connection()
+    cur = conn.cursor()
     for name in noise:
-        conn.execute("DELETE FROM jobs WHERE model_name = ?", (name,))
+        cur.execute("DELETE FROM jobs WHERE model_name = %s", (name,))
     conn.commit()
+    cur.close()
     conn.close()
     return {"deleted": noise}
+
 @router.post("/upload")
 async def upload_eval_file(file: UploadFile = File(...)):
     content = await file.read()
@@ -104,7 +117,11 @@ async def upload_eval_file(file: UploadFile = File(...)):
 @router.get("/{job_id}")
 def get_job(job_id: int):
     conn = get_db_connection()
-    row = conn.execute("SELECT * FROM jobs WHERE id = ?", (job_id,)).fetchone()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    cur.execute("SELECT * FROM jobs WHERE id = %s", (job_id,))
+    row = cur.fetchone()
+    cur.close()
     conn.close()
     if row is None:
         raise HTTPException(status_code=404, detail="Job not found")
+    return dict(row)
