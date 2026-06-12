@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException
 from typing import List
 from core.models import EvalJob
-from fastapi import BackgroundTasks
 from core.runner import run_eval, get_db_connection, create_async_job, update_job_with_result
+from core.queue import get_queue
 from core.clustering import cluster_failures as do_cluster
 from fastapi import UploadFile, File
 import csv
@@ -18,9 +18,10 @@ def submit_job(job: EvalJob):
     return result
 
 @router.post("/eval/async")
-def submit_async_eval(job: EvalJob, background_tasks: BackgroundTasks):
+def submit_async_eval(job: EvalJob):
     job_id = create_async_job(job)
-    background_tasks.add_task(run_eval_background, job_id, job)
+    q = get_queue()
+    q.enqueue(run_eval_background, job_id, job)
     return {"job_id": job_id, "status": "pending"}
 
 def run_eval_background(job_id: int, job: EvalJob):
