@@ -250,3 +250,42 @@ def get_experiments() -> list:
     cur.close()
     conn.close()
     return [dict(row) for row in rows]
+
+def run_pairwise(input: str, reference: str, prediction_a: str, prediction_b: str, model_a: str, model_b: str) -> dict:
+    from core.graders import llm_judge_gemini
+    import os
+    import httpx
+    api_key = os.getenv("GEMINI_API_KEY")
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key={api_key}"
+    prompt = f"""You are an evaluator comparing two model outputs.
+
+Input: {input}
+Reference answer: {reference}
+
+Model A output: {prediction_a}
+Model B output: {prediction_b}
+
+Which model output is better? Respond in this exact format:
+WINNER: A or B or TIE
+REASONING: <one sentence explanation>"""
+    payload = {"contents": [{"parts": [{"text": prompt}]}]}
+    try:
+        response = httpx.post(url, json=payload, timeout=30)
+        text = response.json()["candidates"][0]["content"]["parts"][0]["text"]
+        lines = text.strip().split("\n")
+        winner_line = lines[0].replace("WINNER:", "").strip()
+        reasoning = lines[1].replace("REASONING:", "").strip() if len(lines) > 1 else ""
+        winner = "A" if "A" in winner_line and "B" not in winner_line else "B" if "B" in winner_line and "A" not in winner_line else "TIE"
+    except Exception:
+        winner = "TIE"
+        reasoning = "Judge failed, defaulting to TIE"
+    return {
+        "input": input,
+        "reference": reference,
+        "model_a": model_a,
+        "prediction_a": prediction_a,
+        "model_b": model_b,
+        "prediction_b": prediction_b,
+        "winner": winner,
+        "reasoning": reasoning
+    }

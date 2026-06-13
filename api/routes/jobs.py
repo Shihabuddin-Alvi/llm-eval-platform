@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, BackgroundTasks
 from typing import List
 from core.models import EvalJob
-from core.runner import run_eval, get_db_connection, create_async_job, update_job_with_result
+from core.runner import run_eval, get_db_connection, create_async_job, update_job_with_result, run_pairwise
 from core.queue import get_queue
 from core.clustering import cluster_failures as do_cluster
 from fastapi import UploadFile, File
@@ -129,3 +129,15 @@ def get_job(job_id: int):
     if row is None:
         raise HTTPException(status_code=404, detail="Job not found")
     return dict(row)
+
+@router.post("/compare")
+def compare_models(body: dict):
+    result = run_pairwise(
+        input=body.get("input", ""),
+        reference=body.get("reference", ""),
+        prediction_a=body.get("prediction_a", ""),
+        prediction_b=body.get("prediction_b", ""),
+        model_a=body.get("model_a", "model_a"),
+        model_b=body.get("model_b", "model_b")
+    )
+    return result
