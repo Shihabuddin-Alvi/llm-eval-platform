@@ -3,6 +3,7 @@ load_dotenv()
 import time
 import json
 import logging
+from api.routes import datasets
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("criterion")
@@ -55,6 +56,7 @@ def startup():
 app.include_router(graders.router, dependencies=[Depends(verify_token)])
 app.include_router(jobs.router, dependencies=[Depends(verify_token)])
 app.include_router(history.router, dependencies=[Depends(verify_token)])
+app.include_router(datasets.router, dependencies=[Depends(verify_token)])
 
 @app.get("/health")
 def health_check():

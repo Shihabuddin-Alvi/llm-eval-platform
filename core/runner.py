@@ -40,6 +40,26 @@ def create_tables():
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS datasets (
+            id SERIAL PRIMARY KEY,
+            name TEXT UNIQUE NOT NULL,
+            description TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS dataset_items (
+            id SERIAL PRIMARY KEY,
+            dataset_id INTEGER REFERENCES datasets(id) ON DELETE CASCADE,
+            input TEXT,
+            prediction TEXT,
+            reference TEXT,
+            grader_name TEXT DEFAULT 'exact_match',
+            model_name TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
     conn.commit()
     cur.close()
     conn.close()
@@ -111,4 +131,58 @@ def run_eval(job: EvalJob) -> dict:
     result = grader_fn(job.prediction, job.reference)
     job_id = save_job_result(job, result)
     result["id"] = job_id
+    return result
+
+def create_dataset(name: str, description: str, items: list) -> dict:
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute(
+        "INSERT INTO datasets (name, description) VALUES (%s, %s) RETURNING id, name, description, created_at",
+        (name, description)
+    )
+    row = cur.fetchone()
+    dataset_id = row[0]
+    for item in items:
+        cur.execute(
+            """INSERT INTO dataset_items (dataset_id, input, prediction, reference, grader_name, model_name)
+               VALUES (%s, %s, %s, %s, %s, %s)""",
+            (dataset_id, item.get("input", ""), item.get("prediction", ""),
+             item.get("reference", ""), item.get("grader_name", "exact_match"),
+             item.get("model_name", "unknown"))
+        )
+    conn.commit()
+    cur.close()
+    conn.close()
+    return {"id": row[0], "name": row[1], "description": row[2], "created_at": str(row[3]), "item_count": len(items)}
+
+def get_datasets() -> list:
+    conn = get_db_connection()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    cur.execute("""
+        SELECT d.id, d.name, d.description, d.created_at, COUNT(di.id) as item_count
+        FROM datasets d
+        LEFT JOIN dataset_items di ON d.id = di.dataset_id
+        GROUP BY d.id
+        ORDER BY d.created_at DESC
+    """)
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+    return [dict(row) for row in rows]
+
+def get_dataset(dataset_id: int) -> dict:
+    conn = get_db_connection()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    cur.execute("SELECT * FROM datasets WHERE id = %s", (dataset_id,))
+    dataset = cur.fetchone()
+    if dataset is None:
+        cur.close()
+        conn.close()
+        return None
+    cur.execute("SELECT * FROM dataset_items WHERE dataset_id = %s", (dataset_id,))
+    items = cur.fetchall()
+    cur.close()
+    conn.close()
+    result = dict(dataset)
+    result["items"] = [dict(i) for i in items]
     return result
