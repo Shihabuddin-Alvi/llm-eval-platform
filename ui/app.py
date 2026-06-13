@@ -1,6 +1,7 @@
 import streamlit as st
 import httpx
 import os
+import json
 
 API_URL = "https://criterion-api-c7mf.onrender.com"
 API_KEY = os.getenv("CRITERION_API_KEY", "")
@@ -19,9 +20,6 @@ st.markdown("""
 }
 [data-testid="stSidebar"] * {
     color: #F5F0E8 !important;
-}
-[data-testid="stSidebar"] .stRadio > div {
-    gap: 0.5rem;
 }
 
 .page-title {
@@ -75,10 +73,6 @@ st.markdown("""
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: box-shadow 0.2s ease;
-}
-.history-card:hover {
-    box-shadow: 0 6px 20px rgba(155,44,44,0.12);
 }
 .rank-card {
     background: white;
@@ -87,11 +81,6 @@ st.markdown("""
     box-shadow: 0 4px 20px rgba(0,0,0,0.06);
     border: 1px solid #f1f5f9;
     margin-bottom: 1rem;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.rank-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 28px rgba(155,44,44,0.12);
 }
 .rank-model {
     font-size: 1.1rem;
@@ -108,19 +97,6 @@ st.markdown("""
     font-weight: 900;
     color: #9b2c2c;
 }
-.stTextInput input, .stTextArea textarea {
-    border-radius: 12px !important;
-    border: 1.5px solid #e2e8f0 !important;
-}
-.stTextInput input:focus, .stTextArea textarea:focus {
-    border-color: #9b2c2c !important;
-    box-shadow: 0 0 0 3px rgba(155,44,44,0.1) !important;
-}
-.stSelectbox label, .stTextInput label, .stTextArea label {
-    color: #7B2D3E !important;
-    font-weight: 600 !important;
-    font-size: 0.85rem !important;
-}
 .stButton > button {
     background: #9b2c2c !important;
     color: white !important;
@@ -130,12 +106,6 @@ st.markdown("""
     font-weight: 700 !important;
     font-size: 0.85rem !important;
     letter-spacing: 1px !important;
-    box-shadow: 0 4px 12px rgba(155,44,44,0.25) !important;
-    transition: all 0.2s ease !important;
-}
-.stButton > button:hover {
-    background: #c0392b !important;
-    box-shadow: 0 8px 20px rgba(155,44,44,0.4) !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -145,7 +115,9 @@ page = st.sidebar.radio("Navigate", [
     "History",
     "Leaderboard",
     "Failure Clusters",
-    "Upload File"
+    "Upload File",
+    "Datasets",
+    "Experiments"
 ])
 
 st.markdown("""
@@ -258,13 +230,12 @@ elif page == "Leaderboard":
                 </div>
             </div>
             """, unsafe_allow_html=True)
-
         with st.expander("Full table"):
             st.dataframe(board, use_container_width=True)
 
 elif page == "Failure Clusters":
     st.markdown('<div class="page-title">Failure Clusters</div>', unsafe_allow_html=True)
-    st.markdown("Paste failure texts below, one per line. Criterion will group them by pattern.")
+    st.markdown("Paste failure texts below, one per line.")
     raw = st.text_area("Failure texts", height=200, placeholder="model returned empty\nno output generated\nwrong answer given")
     n_clusters = st.slider("Number of clusters", min_value=2, max_value=10, value=3)
 
@@ -273,13 +244,9 @@ elif page == "Failure Clusters":
         if len(texts) < 2:
             st.warning("Enter at least 2 failure texts.")
         else:
-            res = httpx.post(
-                f"{API_URL}/jobs/failures/cluster",
-                json=texts,
-                headers=HEADERS,
-                params={"n_clusters": n_clusters},
-                timeout=30
-            )
+            res = httpx.post(f"{API_URL}/jobs/failures/cluster",
+                             json=texts, headers=HEADERS,
+                             params={"n_clusters": n_clusters}, timeout=30)
             data = res.json()
             clusters = {}
             for item in data:
@@ -322,3 +289,66 @@ elif page == "Upload File":
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
+
+elif page == "Datasets":
+    st.markdown('<div class="page-title">Datasets</div>', unsafe_allow_html=True)
+
+    st.markdown("#### Existing Datasets")
+    res = httpx.get(f"{API_URL}/datasets", headers=HEADERS, timeout=30)
+    datasets = res.json()
+    if not datasets:
+        st.info("No datasets yet.")
+    else:
+        for ds in datasets:
+            col1, col2 = st.columns([3, 1])
+            with col1:
+                st.markdown(f"**{ds['name']}** — {ds.get('description', '')} ({ds['item_count']} items)")
+            with col2:
+                if st.button(f"Run", key=f"run_{ds['id']}"):
+                    run_res = httpx.post(f"{API_URL}/datasets/{ds['id']}/run", headers=HEADERS, timeout=60)
+                    run_data = run_res.json()
+                    st.success(f"Done. {run_data['passed_items']}/{run_data['total_items']} passed. Avg score: {run_data['avg_score']}")
+
+    st.markdown("---")
+    st.markdown("#### Create New Dataset")
+    ds_name = st.text_input("Dataset name")
+    ds_desc = st.text_input("Description")
+    ds_items = st.text_area("Items as JSONL (one JSON object per line)", height=150,
+        placeholder='{"input": "What is 2+2?", "prediction": "4", "reference": "4", "grader_name": "exact_match", "model_name": "gpt-4"}')
+
+    if st.button("CREATE DATASET"):
+        if not ds_name:
+            st.warning("Name is required.")
+        else:
+            items = []
+            for line in ds_items.strip().split("\n"):
+                if line.strip():
+                    items.append(json.loads(line))
+            payload = {"name": ds_name, "description": ds_desc, "items": items}
+            create_res = httpx.post(f"{API_URL}/datasets", json=payload, headers=HEADERS, timeout=30)
+            st.success(f"Dataset created with {create_res.json().get('item_count', 0)} items.")
+
+elif page == "Experiments":
+    st.markdown('<div class="page-title">Experiments</div>', unsafe_allow_html=True)
+    res = httpx.get(f"{API_URL}/datasets/experiments", headers=HEADERS, timeout=30)
+    experiments = res.json()
+    if not experiments:
+        st.info("No experiments yet. Run a dataset from the Datasets page.")
+    else:
+        for exp in experiments:
+            passed = exp['passed_items']
+            total = exp['total_items']
+            avg = exp['avg_score']
+            color = "#9b2c2c" if avg >= 0.5 else "#64748b"
+            st.markdown(f"""
+            <div class="history-card">
+                <div>
+                    <div style="font-weight:700; color:#2c3e50;">{exp['dataset_name']}</div>
+                    <div style="font-size:0.8rem; color:#94a3b8;">{exp['created_at']} · {passed}/{total} passed</div>
+                </div>
+                <div style="text-align:right;">
+                    <div style="font-size:1.6rem; font-weight:900; color:{color};">{avg}</div>
+                    <div style="font-size:0.68rem; font-weight:700; color:{color};">AVG SCORE</div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
