@@ -60,6 +60,17 @@ def create_tables():
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS experiments (
+            id SERIAL PRIMARY KEY,
+            dataset_id INTEGER REFERENCES datasets(id) ON DELETE CASCADE,
+            name TEXT,
+            total_items INTEGER,
+            passed_items INTEGER,
+            avg_score REAL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
     conn.commit()
     cur.close()
     conn.close()
@@ -186,3 +197,56 @@ def get_dataset(dataset_id: int) -> dict:
     result = dict(dataset)
     result["items"] = [dict(i) for i in items]
     return result
+
+def run_experiment(dataset_id: int) -> dict:
+    dataset = get_dataset(dataset_id)
+    if dataset is None:
+        return None
+    results = []
+    for item in dataset["items"]:
+        job = EvalJob(
+            input=item["input"],
+            prediction=item["prediction"],
+            reference=item["reference"],
+            grader_name=item["grader_name"],
+            model_name=item["model_name"]
+        )
+        result = run_eval(job)
+        results.append(result)
+    total = len(results)
+    passed = sum(1 for r in results if r.get("passed"))
+    avg_score = round(sum(r.get("score", 0) for r in results) / total, 3) if total > 0 else 0.0
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute(
+        """INSERT INTO experiments (dataset_id, name, total_items, passed_items, avg_score)
+           VALUES (%s, %s, %s, %s, %s) RETURNING id""",
+        (dataset_id, dataset["name"], total, passed, avg_score)
+    )
+    experiment_id = cur.fetchone()[0]
+    conn.commit()
+    cur.close()
+    conn.close()
+    return {
+        "experiment_id": experiment_id,
+        "dataset_id": dataset_id,
+        "dataset_name": dataset["name"],
+        "total_items": total,
+        "passed_items": passed,
+        "avg_score": avg_score,
+        "results": results
+    }
+
+def get_experiments() -> list:
+    conn = get_db_connection()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    cur.execute("""
+        SELECT e.*, d.name as dataset_name
+        FROM experiments e
+        JOIN datasets d ON e.dataset_id = d.id
+        ORDER BY e.created_at DESC
+    """)
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+    return [dict(row) for row in rows]
