@@ -1,12 +1,19 @@
 import re
 import os
+import time
+import logging
 import httpx
+
+logger = logging.getLogger("criterion")
 
 
 def exact_match(prediction: str, reference: str) -> dict:
+    start = time.time()
     prediction_clean = prediction.strip().lower()
     reference_clean = reference.strip().lower()
     passed = prediction_clean == reference_clean
+    latency_ms = round((time.time() - start) * 1000, 2)
+    logger.info({"grader": "exact_match", "passed": passed, "latency_ms": latency_ms})
     return {
         "grader": "exact_match",
         "passed": passed,
@@ -44,6 +51,7 @@ def regex_match(prediction: str, pattern: str) -> dict:
 
 
 def llm_judge_gemini(prediction: str, reference: str, criteria: str = "accuracy") -> dict:
+    start = time.time()
     api_key = os.getenv("GEMINI_API_KEY")
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key={api_key}"
     prompt = f"""You are an evaluator. Score the prediction against the reference.
@@ -63,6 +71,8 @@ REASONING: <one sentence explanation>"""
         score = float(lines[0].replace("SCORE:", "").strip())
         reasoning = lines[1].replace("REASONING:", "").strip()
         passed = score >= 0.5
+        latency_ms = round((time.time() - start) * 1000, 2)
+        logger.info({"grader": "llm_judge_gemini", "passed": passed, "latency_ms": latency_ms})
         return {"score": score, "passed": passed, "grader": "llm_judge", "reasoning": reasoning}
     except Exception as e:
         raise RuntimeError(str(e))
