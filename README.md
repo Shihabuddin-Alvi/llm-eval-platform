@@ -95,3 +95,11 @@ python3 criterion_tests_v3.py
 
 ## Version
 v3.0 — Postgres persistence, re.DOTALL fix, 108/108 tests passing.
+
+## Roadmap
+
+Three features planned:
+
+- Adversarial eval suites. Prompt injection and jailbreak batteries, scored as held-out test sets.
+- Agent trajectory evaluation. Scores multi-step agent runs on tool selection and policy adherence, not just final output.
+- Regression gating. Automated scoring across model versions to flag eval regressions before release.
