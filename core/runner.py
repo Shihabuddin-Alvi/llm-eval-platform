@@ -34,6 +34,18 @@ def create_tables():
         )
     """)
     cur.execute("""
+        CREATE TABLE IF NOT EXISTS probe_results (
+            id SERIAL PRIMARY KEY,
+            bias_family TEXT NOT NULL,
+            n INTEGER NOT NULL,
+            flip_rate REAL NOT NULL,
+            ci_low REAL,
+            ci_high REAL,
+            judge_grader_used TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+    cur.execute("""
         CREATE TABLE IF NOT EXISTS api_keys (
             id SERIAL PRIMARY KEY,
             token TEXT UNIQUE NOT NULL,
