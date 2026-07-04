@@ -1,0 +1,46 @@
+{"id": "v001", "input": "What is the capital of Portugal?", "reference": "Lisbon", "wrong_prediction": "Porto"}
+{"id": "v002", "input": "What is the capital of Japan?", "reference": "Tokyo", "wrong_prediction": "Osaka"}
+{"id": "v003", "input": "What is the capital of Australia?", "reference": "Canberra", "wrong_prediction": "Sydney"}
+{"id": "v004", "input": "What is the capital of Canada?", "reference": "Ottawa", "wrong_prediction": "Toronto"}
+{"id": "v005", "input": "What is the capital of Brazil?", "reference": "Brasilia", "wrong_prediction": "Rio de Janeiro"}
+{"id": "v006", "input": "What is the capital of Egypt?", "reference": "Cairo", "wrong_prediction": "Alexandria"}
+{"id": "v007", "input": "What is the capital of Italy?", "reference": "Rome", "wrong_prediction": "Milan"}
+{"id": "v008", "input": "What is the capital of Germany?", "reference": "Berlin", "wrong_prediction": "Munich"}
+{"id": "v009", "input": "What is the capital of India?", "reference": "New Delhi", "wrong_prediction": "Mumbai"}
+{"id": "v010", "input": "What is the capital of South Korea?", "reference": "Seoul", "wrong_prediction": "Busan"}
+{"id": "v011", "input": "What is the chemical symbol for gold?", "reference": "Au", "wrong_prediction": "Ag"}
+{"id": "v012", "input": "What is the chemical symbol for iron?", "reference": "Fe", "wrong_prediction": "Fr"}
+{"id": "v013", "input": "What is the chemical symbol for sodium?", "reference": "Na", "wrong_prediction": "So"}
+{"id": "v014", "input": "What is the chemical symbol for potassium?", "reference": "K", "wrong_prediction": "Po"}
+{"id": "v015", "input": "What is the chemical symbol for silver?", "reference": "Ag", "wrong_prediction": "Au"}
+{"id": "v016", "input": "What is 12 times 8?", "reference": "96", "wrong_prediction": "86"}
+{"id": "v017", "input": "What is 15 times 7?", "reference": "105", "wrong_prediction": "95"}
+{"id": "v018", "input": "What is 9 squared?", "reference": "81", "wrong_prediction": "72"}
+{"id": "v019", "input": "What is the square root of 144?", "reference": "12", "wrong_prediction": "14"}
+{"id": "v020", "input": "What is 100 divided by 4?", "reference": "25", "wrong_prediction": "20"}
+{"id": "v021", "input": "Who wrote Romeo and Juliet?", "reference": "William Shakespeare", "wrong_prediction": "Christopher Marlowe"}
+{"id": "v022", "input": "Who painted the Mona Lisa?", "reference": "Leonardo da Vinci", "wrong_prediction": "Michelangelo"}
+{"id": "v023", "input": "Who developed the theory of relativity?", "reference": "Albert Einstein", "wrong_prediction": "Isaac Newton"}
+{"id": "v024", "input": "Who wrote Pride and Prejudice?", "reference": "Jane Austen", "wrong_prediction": "Charlotte Bronte"}
+{"id": "v025", "input": "Who discovered penicillin?", "reference": "Alexander Fleming", "wrong_prediction": "Louis Pasteur"}
+{"id": "v026", "input": "In what year did World War 2 end?", "reference": "1945", "wrong_prediction": "1944"}
+{"id": "v027", "input": "In what year did the Berlin Wall fall?", "reference": "1989", "wrong_prediction": "1991"}
+{"id": "v028", "input": "In what year was the United Nations founded?", "reference": "1945", "wrong_prediction": "1948"}
+{"id": "v029", "input": "In what year did the first man land on the moon?", "reference": "1969", "wrong_prediction": "1968"}
+{"id": "v030", "input": "In what year did India gain independence?", "reference": "1947", "wrong_prediction": "1950"}
+{"id": "v031", "input": "What planet is known as the Red Planet?", "reference": "Mars", "wrong_prediction": "Jupiter"}
+{"id": "v032", "input": "What is the largest planet in the solar system?", "reference": "Jupiter", "wrong_prediction": "Saturn"}
+{"id": "v033", "input": "What is the smallest planet in the solar system?", "reference": "Mercury", "wrong_prediction": "Pluto"}
+{"id": "v034", "input": "What gas do plants absorb for photosynthesis?", "reference": "Carbon dioxide", "wrong_prediction": "Oxygen"}
+{"id": "v035", "input": "What is the boiling point of water in Celsius?", "reference": "100", "wrong_prediction": "90"}
+{"id": "v036", "input": "What is the freezing point of water in Celsius?", "reference": "0", "wrong_prediction": "4"}
+{"id": "v037", "input": "How many continents are there?", "reference": "7", "wrong_prediction": "6"}
+{"id": "v038", "input": "How many bones are in the adult human body?", "reference": "206", "wrong_prediction": "210"}
+{"id": "v039", "input": "What is the longest river in the world?", "reference": "The Nile", "wrong_prediction": "The Amazon"}
+{"id": "v040", "input": "What is the tallest mountain in the world?", "reference": "Mount Everest", "wrong_prediction": "K2"}
+{"id": "v041", "input": "What is the currency of Japan?", "reference": "Yen", "wrong_prediction": "Won"}
+{"id": "v042", "input": "What is the currency of the United Kingdom?", "reference": "Pound sterling", "wrong_prediction": "Euro"}
+{"id": "v043", "input": "What is the speed of light in km/s, rounded?", "reference": "300000", "wrong_prediction": "150000"}
+{"id": "v044", "input": "What is the powerhouse of the cell?", "reference": "Mitochondria", "wrong_prediction": "Nucleus"}
+{"id": "v045", "input": "What is the hardest natural substance on Earth?", "reference": "Diamond", "wrong_prediction": "Quartz"}
+{"id": "v046", "input": "What is the capital of Spain?", "reference": "Madrid", "wrong_prediction": "Barcelona"}

@@ -1,0 +1,46 @@
+{"id": "p001", "input": "What is the capital of Portugal?", "reference": "Lisbon", "completion_a": "Lisbon", "completion_b": "Porto"}
+{"id": "p002", "input": "What is the capital of Japan?", "reference": "Tokyo", "completion_a": "Tokyo", "completion_b": "Osaka"}
+{"id": "p003", "input": "What is the capital of Australia?", "reference": "Canberra", "completion_a": "Canberra", "completion_b": "Sydney"}
+{"id": "p004", "input": "What is the capital of Canada?", "reference": "Ottawa", "completion_a": "Ottawa", "completion_b": "Toronto"}
+{"id": "p005", "input": "What is the capital of Brazil?", "reference": "Brasilia", "completion_a": "Brasilia", "completion_b": "Rio de Janeiro"}
+{"id": "p006", "input": "What is the capital of Egypt?", "reference": "Cairo", "completion_a": "Cairo", "completion_b": "Alexandria"}
+{"id": "p007", "input": "What is the capital of Italy?", "reference": "Rome", "completion_a": "Rome", "completion_b": "Milan"}
+{"id": "p008", "input": "What is the capital of Germany?", "reference": "Berlin", "completion_a": "Berlin", "completion_b": "Munich"}
+{"id": "p009", "input": "What is the capital of India?", "reference": "New Delhi", "completion_a": "New Delhi", "completion_b": "Mumbai"}
+{"id": "p010", "input": "What is the capital of South Korea?", "reference": "Seoul", "completion_a": "Seoul", "completion_b": "Busan"}
+{"id": "p011", "input": "What is the chemical symbol for gold?", "reference": "Au", "completion_a": "Au", "completion_b": "Ag"}
+{"id": "p012", "input": "What is the chemical symbol for iron?", "reference": "Fe", "completion_a": "Fe", "completion_b": "Fr"}
+{"id": "p013", "input": "What is the chemical symbol for sodium?", "reference": "Na", "completion_a": "Na", "completion_b": "So"}
+{"id": "p014", "input": "What is the chemical symbol for potassium?", "reference": "K", "completion_a": "K", "completion_b": "Po"}
+{"id": "p015", "input": "What is the chemical symbol for silver?", "reference": "Ag", "completion_a": "Ag", "completion_b": "Au"}
+{"id": "p016", "input": "What is 12 times 8?", "reference": "96", "completion_a": "96", "completion_b": "86"}
+{"id": "p017", "input": "What is 15 times 7?", "reference": "105", "completion_a": "105", "completion_b": "95"}
+{"id": "p018", "input": "What is 9 squared?", "reference": "81", "completion_a": "81", "completion_b": "72"}
+{"id": "p019", "input": "What is the square root of 144?", "reference": "12", "completion_a": "12", "completion_b": "14"}
+{"id": "p020", "input": "What is 100 divided by 4?", "reference": "25", "completion_a": "25", "completion_b": "20"}
+{"id": "p021", "input": "Who wrote Romeo and Juliet?", "reference": "William Shakespeare", "completion_a": "William Shakespeare", "completion_b": "Christopher Marlowe"}
+{"id": "p022", "input": "Who painted the Mona Lisa?", "reference": "Leonardo da Vinci", "completion_a": "Leonardo da Vinci", "completion_b": "Michelangelo"}
+{"id": "p023", "input": "Who developed the theory of relativity?", "reference": "Albert Einstein", "completion_a": "Albert Einstein", "completion_b": "Isaac Newton"}
+{"id": "p024", "input": "Who wrote Pride and Prejudice?", "reference": "Jane Austen", "completion_a": "Jane Austen", "completion_b": "Charlotte Bronte"}
+{"id": "p025", "input": "Who discovered penicillin?", "reference": "Alexander Fleming", "completion_a": "Alexander Fleming", "completion_b": "Louis Pasteur"}
+{"id": "p026", "input": "In what year did World War 2 end?", "reference": "1945", "completion_a": "1945", "completion_b": "1944"}
+{"id": "p027", "input": "In what year did the Berlin Wall fall?", "reference": "1989", "completion_a": "1989", "completion_b": "1991"}
+{"id": "p028", "input": "In what year was the United Nations founded?", "reference": "1945", "completion_a": "1945", "completion_b": "1948"}
+{"id": "p029", "input": "In what year did the first man land on the moon?", "reference": "1969", "completion_a": "1969", "completion_b": "1968"}
+{"id": "p030", "input": "In what year did India gain independence?", "reference": "1947", "completion_a": "1947", "completion_b": "1950"}
+{"id": "p031", "input": "What planet is known as the Red Planet?", "reference": "Mars", "completion_a": "Mars", "completion_b": "Jupiter"}
+{"id": "p032", "input": "What is the largest planet in the solar system?", "reference": "Jupiter", "completion_a": "Jupiter", "completion_b": "Saturn"}
+{"id": "p033", "input": "What is the smallest planet in the solar system?", "reference": "Mercury", "completion_a": "Mercury", "completion_b": "Pluto"}
+{"id": "p034", "input": "What gas do plants absorb for photosynthesis?", "reference": "Carbon dioxide", "completion_a": "Carbon dioxide", "completion_b": "Oxygen"}
+{"id": "p035", "input": "What is the boiling point of water in Celsius?", "reference": "100", "completion_a": "100", "completion_b": "90"}
+{"id": "p036", "input": "What is the freezing point of water in Celsius?", "reference": "0", "completion_a": "0", "completion_b": "4"}
+{"id": "p037", "input": "How many continents are there?", "reference": "7", "completion_a": "7", "completion_b": "6"}
+{"id": "p038", "input": "How many bones are in the adult human body?", "reference": "206", "completion_a": "206", "completion_b": "210"}
+{"id": "p039", "input": "What is the longest river in the world?", "reference": "The Nile", "completion_a": "The Nile", "completion_b": "The Amazon"}
+{"id": "p040", "input": "What is the tallest mountain in the world?", "reference": "Mount Everest", "completion_a": "Mount Everest", "completion_b": "K2"}
+{"id": "p041", "input": "What is the currency of Japan?", "reference": "Yen", "completion_a": "Yen", "completion_b": "Won"}
+{"id": "p042", "input": "What is the currency of the United Kingdom?", "reference": "Pound sterling", "completion_a": "Pound sterling", "completion_b": "Euro"}
+{"id": "p043", "input": "What is the speed of light in km/s, rounded?", "reference": "300000", "completion_a": "300000", "completion_b": "150000"}
+{"id": "p044", "input": "What is the powerhouse of the cell?", "reference": "Mitochondria", "completion_a": "Mitochondria", "completion_b": "Nucleus"}
+{"id": "p045", "input": "What is the hardest natural substance on Earth?", "reference": "Diamond", "completion_a": "Diamond", "completion_b": "Quartz"}
+{"id": "p046", "input": "What is the capital of Spain?", "reference": "Madrid", "completion_a": "Madrid", "completion_b": "Barcelona"}
