@@ -4,6 +4,7 @@ import time
 import json
 import logging
 from api.routes import datasets
+from api.routes import probes
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("criterion")
@@ -57,6 +58,7 @@ app.include_router(graders.router, dependencies=[Depends(verify_token)])
 app.include_router(jobs.router, dependencies=[Depends(verify_token)])
 app.include_router(history.router, dependencies=[Depends(verify_token)])
 app.include_router(datasets.router, dependencies=[Depends(verify_token)])
+app.include_router(probes.router, dependencies=[Depends(verify_token)])
 
 @app.get("/health")
 def health_check():
