@@ -5,3 +5,5 @@ __pycache__/
 .DS_Store
 **/.DS_Store
 data/eval.db
+.DS_Store
+**/.DS_Store
