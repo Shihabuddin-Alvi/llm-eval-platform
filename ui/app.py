@@ -2,6 +2,8 @@ import streamlit as st
 import httpx
 import os
 import json
+from dotenv import load_dotenv
+load_dotenv()
 
 API_URL = "https://criterion-api-c7mf.onrender.com"
 API_KEY = os.getenv("CRITERION_API_KEY", "")
