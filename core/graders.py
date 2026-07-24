@@ -53,7 +53,7 @@ def regex_match(prediction: str, pattern: str) -> dict:
 def llm_judge_gemini(prediction: str, reference: str, criteria: str = "accuracy") -> dict:
     start = time.time()
     api_key = os.getenv("GEMINI_API_KEY")
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key={api_key}"
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key={api_key}"
     prompt = f"""You are an evaluator. Score the prediction against the reference.
 
 Criteria: {criteria}
