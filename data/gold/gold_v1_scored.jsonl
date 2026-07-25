@@ -1,6 +1,6 @@
 {"id": 1, "input": "What is the capital of France?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 1.0, "groq_passed": true}
 {"id": 2, "input": "What is the capital of France?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 1.0, "groq_passed": true}
-{"id": 9, "input": "What is the largest planet in our solar system?", "human_correct": true, "gemini_score": 0.0, "gemini_passed": false, "groq_score": 0.0, "groq_passed": false}
+{"id": 9, "input": "What is the largest planet in our solar system?", "human_correct": false, "gemini_score": 0.0, "gemini_passed": false, "groq_score": 0.0, "groq_passed": false}
 {"id": 10, "input": "What is the largest planet in our solar system?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 1.0, "groq_passed": true}
 {"id": 11, "input": "In what year did World War II end?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 0.9, "groq_passed": true}
 {"id": 12, "input": "In what year did World War II end?", "human_correct": false, "gemini_score": 0.0, "gemini_passed": false, "groq_score": 0.0, "groq_passed": false}
@@ -12,19 +12,49 @@
 {"id": 32, "input": "What is the smallest prime number?", "human_correct": false, "gemini_score": 0.0, "gemini_passed": false, "groq_score": 0.0, "groq_passed": false}
 {"id": 33, "input": "Who was the first person to walk on the moon?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 1.0, "groq_passed": true}
 {"id": 34, "input": "Who was the first person to walk on the moon?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 0.8, "groq_passed": true}
-{"id": 37, "input": "What year did the Berlin Wall fall?", "human_correct": true, "gemini_score": 0.0, "gemini_passed": false, "groq_score": 0.0, "groq_passed": false}
+{"id": 37, "input": "What year did the Berlin Wall fall?", "human_correct": false, "gemini_score": 0.0, "gemini_passed": false, "groq_score": 0.0, "groq_passed": false}
 {"id": 38, "input": "What year did the Berlin Wall fall?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 1.0, "groq_passed": true}
 {"id": 39, "input": "What is 15 multiplied by 4?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 0.5, "groq_passed": true}
 {"id": 40, "input": "What is 15 multiplied by 4?", "human_correct": true, "gemini_score": 0.75, "gemini_passed": true, "groq_score": 0.25, "groq_passed": false}
-{"id": 41, "input": "What is the freezing point of water in Fahrenheit?", "human_correct": true, "gemini_score": 0.0, "gemini_passed": false, "groq_score": 0.0, "groq_passed": false}
+{"id": 41, "input": "What is the freezing point of water in Fahrenheit?", "human_correct": false, "gemini_score": 0.0, "gemini_passed": false, "groq_score": 0.0, "groq_passed": false}
 {"id": 42, "input": "What is the freezing point of water in Fahrenheit?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 1.0, "groq_passed": true}
 {"id": 43, "input": "Who wrote 1984?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 1.0, "groq_passed": true}
 {"id": 44, "input": "Who wrote 1984?", "human_correct": false, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 1.0, "groq_passed": true}
 {"id": 49, "input": "What is the chemical formula for water?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 0.9, "groq_passed": true}
-{"id": 50, "input": "What is the chemical formula for water?", "human_correct": true, "gemini_score": 0.0, "gemini_passed": false, "groq_score": 0.0, "groq_passed": false}
-{"id": 51, "input": "How many players are on a standard soccer team on the field?", "human_correct": true, "gemini_score": 0.0, "gemini_passed": false, "groq_score": 0.0, "groq_passed": false}
+{"id": 50, "input": "What is the chemical formula for water?", "human_correct": false, "gemini_score": 0.0, "gemini_passed": false, "groq_score": 0.0, "groq_passed": false}
+{"id": 51, "input": "How many players are on a standard soccer team on the field?", "human_correct": false, "gemini_score": 0.0, "gemini_passed": false, "groq_score": 0.0, "groq_passed": false}
 {"id": 52, "input": "How many players are on a standard soccer team on the field?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 1.0, "groq_passed": true}
-{"id": 55, "input": "Who is known as the father of computers?", "human_correct": true, "gemini_score": 0.0, "gemini_passed": false, "groq_score": 0.0, "groq_passed": false}
+{"id": 55, "input": "Who is known as the father of computers?", "human_correct": false, "gemini_score": 0.0, "gemini_passed": false, "groq_score": 0.0, "groq_passed": false}
 {"id": 56, "input": "Who is known as the father of computers?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 1.0, "groq_passed": true}
 {"id": 57, "input": "What is the approximate speed of light in a vacuum, in km/s?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 1.0, "groq_passed": true}
 {"id": 58, "input": "What is the approximate speed of light in a vacuum, in km/s?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 1.0, "groq_passed": true}
+{"id": 61, "input": "What is the capital of New Zealand?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 1.0, "groq_passed": true}
+{"id": 62, "input": "What is the capital of New Zealand?", "human_correct": false, "gemini_score": 0.0, "gemini_passed": false, "groq_score": 0.0, "groq_passed": false}
+{"id": 63, "input": "Who composed the Ninth Symphony?", "human_correct": false, "gemini_score": 0.0, "gemini_passed": false, "groq_score": 0.0, "groq_passed": false}
+{"id": 64, "input": "Who composed the Ninth Symphony?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 1.0, "groq_passed": true}
+{"id": 65, "input": "What metal has the chemical symbol Fe?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 1.0, "groq_passed": true}
+{"id": 66, "input": "What metal has the chemical symbol Fe?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 0.8, "groq_passed": true}
+{"id": 71, "input": "What is the largest ocean on Earth?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 0.8, "groq_passed": true}
+{"id": 72, "input": "What is the largest ocean on Earth?", "human_correct": false, "gemini_score": 0.0, "gemini_passed": false, "groq_score": 0.0, "groq_passed": false}
+{"id": 77, "input": "Who wrote The Great Gatsby?", "human_correct": false, "gemini_score": 0.0, "gemini_passed": false, "groq_score": 0.0, "groq_passed": false}
+{"id": 78, "input": "Who wrote The Great Gatsby?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 1.0, "groq_passed": true}
+{"id": 79, "input": "What is the atomic number of hydrogen?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 1.0, "groq_passed": true}
+{"id": 80, "input": "What is the atomic number of hydrogen?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 1.0, "groq_passed": true}
+{"id": 81, "input": "What year did the Titanic sink?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 1.0, "groq_passed": true}
+{"id": 82, "input": "What year did the Titanic sink?", "human_correct": false, "gemini_score": 0.0, "gemini_passed": false, "groq_score": 0.0, "groq_passed": false}
+{"id": 83, "input": "What is the capital of Kenya?", "human_correct": false, "gemini_score": 0.0, "gemini_passed": false, "groq_score": 0.0, "groq_passed": false}
+{"id": 84, "input": "What is the capital of Kenya?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 0.8, "groq_passed": true}
+{"id": 85, "input": "Who directed the movie Jaws?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 0.8, "groq_passed": true}
+{"id": 86, "input": "Who directed the movie Jaws?", "human_correct": false, "gemini_score": 0.0, "gemini_passed": false, "groq_score": 0.0, "groq_passed": false}
+{"id": 89, "input": "What is the capital of Argentina?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 1.0, "groq_passed": true}
+{"id": 90, "input": "What is the capital of Argentina?", "human_correct": false, "gemini_score": 0.0, "gemini_passed": false, "groq_score": 0.0, "groq_passed": false}
+{"id": 91, "input": "What is the capital of Thailand?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 1.0, "groq_passed": true}
+{"id": 92, "input": "What is the capital of Thailand?", "human_correct": false, "gemini_score": 0.0, "gemini_passed": false, "groq_score": 0.0, "groq_passed": false}
+{"id": 93, "input": "Who wrote The Catcher in the Rye?", "human_correct": false, "gemini_score": 0.0, "gemini_passed": false, "groq_score": 0.0, "groq_passed": false}
+{"id": 94, "input": "Who wrote The Catcher in the Rye?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 1.0, "groq_passed": true}
+{"id": 95, "input": "What is the largest hot desert in the world?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 1.0, "groq_passed": true}
+{"id": 96, "input": "What is the largest hot desert in the world?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 0.0, "groq_passed": false}
+{"id": 97, "input": "Who painted The Starry Night?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 0.0, "groq_passed": false}
+{"id": 98, "input": "Who painted The Starry Night?", "human_correct": false, "gemini_score": 0.0, "gemini_passed": false, "groq_score": 0.0, "groq_passed": false}
+{"id": 99, "input": "What is the currency of India?", "human_correct": false, "gemini_score": 0.0, "gemini_passed": false, "groq_score": 0.0, "groq_passed": false}
+{"id": 100, "input": "What is the currency of India?", "human_correct": true, "gemini_score": 1.0, "gemini_passed": true, "groq_score": 0.8, "groq_passed": true}
