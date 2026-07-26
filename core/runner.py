@@ -11,9 +11,10 @@ GRADERS = {
     "llm_judge": llm_judge,
 }
 
+from core.db_pool import get_pooled_connection
+
 def get_db_connection():
-    conn = psycopg2.connect(os.environ["DATABASE_URL"])
-    return conn
+    return get_pooled_connection()
 
 def create_tables():
     conn = get_db_connection()
