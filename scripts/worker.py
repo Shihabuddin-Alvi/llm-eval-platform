@@ -1,11 +1,13 @@
 import os
-os.environ.setdefault("OBJC_DISABLE_INITIALIZE_FORK_SAFETY", "YES")
 import sys
-import os
-from dotenv import load_dotenv
-load_dotenv()
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from core.fork_safety import ensure_fork_safety_env
+ensure_fork_safety_env()
+
+from dotenv import load_dotenv
+load_dotenv()
 
 from rq import Worker
 from core.queue import get_redis
