@@ -1,0 +1,35 @@
+[
+  {
+    "p50": 9.337,
+    "p95": 11.237,
+    "throughput_per_sec": 0.204,
+    "errored": 0,
+    "completed": 20,
+    "label": "backgroundtasks",
+    "concurrency": 2,
+    "total": 20,
+    "wall_time": 98.247
+  },
+  {
+    "p50": 37.374,
+    "p95": 42.909,
+    "throughput_per_sec": 0.135,
+    "errored": 0,
+    "completed": 20,
+    "label": "backgroundtasks",
+    "concurrency": 5,
+    "total": 20,
+    "wall_time": 148.526
+  },
+  {
+    "p50": 48.915,
+    "p95": 62.236,
+    "throughput_per_sec": 0.071,
+    "errored": 13,
+    "completed": 7,
+    "label": "backgroundtasks",
+    "concurrency": 10,
+    "total": 20,
+    "wall_time": 98.165
+  }
+]
