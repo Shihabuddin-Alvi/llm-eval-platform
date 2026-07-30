@@ -148,11 +148,15 @@ def load_job_history(limit: int = 50) -> list:
     conn.close()
     return [dict(row) for row in rows]
 
-def run_eval(job: EvalJob) -> dict:
+def compute_eval_result(job: EvalJob) -> dict:
     grader_fn = GRADERS.get(job.grader_name)
     if grader_fn is None:
         return {"score": 0.0, "passed": False, "grader": job.grader_name, "reasoning": "Grader not found"}
-    result = grader_fn(job.prediction, job.reference)
+    return grader_fn(job.prediction, job.reference)
+
+
+def run_eval(job: EvalJob) -> dict:
+    result = compute_eval_result(job)
     job_id = save_job_result(job, result)
     result["id"] = job_id
     return result
