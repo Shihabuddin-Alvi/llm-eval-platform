@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, BackgroundTasks
+from fastapi import APIRouter, HTTPException, BackgroundTasks, Body
 from typing import List
 from core.models import EvalJob
 from core.queue import get_queue
@@ -43,10 +43,6 @@ def get_async_job(job_id: int):
         raise HTTPException(status_code=404, detail="Job not found")
     return dict(row)
 
-@router.get("")
-def list_jobs():
-    return []
-
 @router.get("/leaderboard")
 def get_leaderboard():
     conn = get_db_connection()
@@ -76,20 +72,20 @@ def cluster_failures(texts: List[str], n_clusters: int = 3):
     return do_cluster(texts, n_clusters)
 
 @router.delete("/cleanup")
-def cleanup_test_data():
-    noise = [
+def cleanup_test_data(model_names: List[str] = Body(default=None)):
+    names = model_names if model_names else [
         'concurrency-test', 'batch-100', 'perf-test', 'batch-mixed',
         'mixed-test', 'tie-breaker-test', 'integrity-model', 'edge-test',
         'math-verify-model', 'suite-v3'
     ]
     conn = get_db_connection()
     cur = conn.cursor()
-    for name in noise:
+    for name in names:
         cur.execute("DELETE FROM jobs WHERE model_name = %s", (name,))
     conn.commit()
     cur.close()
     conn.close()
-    return {"deleted": noise}
+    return {"deleted": names}
 
 @router.post("/upload")
 async def upload_eval_file(file: UploadFile = File(...)):

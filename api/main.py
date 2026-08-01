@@ -20,7 +20,7 @@ from core.auth import verify_token
 app = FastAPI(
     title="LLM Eval Platform",
     description="REST API for evaluating LLM outputs.",
-    version="0.1.0"
+    version="3.2.0"
 )
 @app.middleware("http")
 async def log_requests(request, call_next):
@@ -62,4 +62,4 @@ app.include_router(probes.router, dependencies=[Depends(verify_token)])
 
 @app.get("/health")
 def health_check():
-    return {"status": "ok", "version": "0.1.0"}
+    return {"status": "ok", "version": "3.2.0"}
