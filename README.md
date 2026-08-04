@@ -121,4 +121,4 @@ Post-v3.0, this project went through a structured audit and a phased validation 
 - **Phase 6** — connection pooling, a real working RQ async worker, load testing, and a cost model. See `docs/phase6_cost_latency.md`.
 - **Phase 7** — this documentation and hygiene pass, plus `docs/comparison_frameworks.md`.
 
-A real production incident (an expired free-tier database and stale API keys) is documented in full in `docs/incidents/`.
+A tangible production incident (an expired free-tier database and stale API keys) is documented in full in `docs/incidents/`.
