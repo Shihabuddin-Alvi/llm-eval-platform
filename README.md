@@ -1,6 +1,6 @@
 # Criterion — LLM Evaluation Platform
 
-A REST API and MCP server for evaluating LLM outputs. Agents call the API programmatically to run evals, compare models, and diagnose failures. The Streamlit UI is a thin wrapper that calls the same API.
+A REST API and MCP server for evaluating LLM outputs. Agents call the API programmatically to run evals, compare models, and diagnose shortcomings. The Streamlit UI is a thin wrapper that calls the same API.
 
 **The API is the product. Business logic never lives in the UI layer.**
 
